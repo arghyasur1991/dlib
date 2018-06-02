@@ -1631,9 +1631,9 @@ namespace dlib
                 }
                 else 
                 {
-                    throw serialization_error("An error occurred while trying to read the " +
+                    throw serialization_error("An error occurred while trying to read the "/* +
                         std::to_string(objects_read+1) + "th object from the file " + filename +
-                        ".\nERROR: " + e.info + "\n" + suffix);
+                        ".\nERROR: " + e.info + "\n" + suffix*/);
                 }
             }
             ++objects_read;
