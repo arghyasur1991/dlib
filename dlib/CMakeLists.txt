@@ -243,6 +243,7 @@ if (NOT TARGET dlib)
       global_optimization/global_function_search.cpp
       filtering/kalman_filter.cpp
       test_for_odr_violations.cpp
+      svm/auto.cpp
       )
 
 
@@ -404,8 +405,9 @@ if (NOT TARGET dlib)
          # try to find libpng 
          find_package(PNG QUIET)
          # Make sure there isn't something wrong with the version of LIBPNG
-         # installed on this system.  
-         if (PNG_FOUND)
+         # installed on this system.  Also never link to anything from anaconda
+         # since it's probably broken.
+         if (PNG_FOUND AND NOT ("${PNG_INCLUDE_DIR}" MATCHES "(.*)(Ana|ana|mini)conda(.*)"))
             set(CMAKE_REQUIRED_LIBRARIES ${PNG_LIBRARIES})
             CHECK_FUNCTION_EXISTS(png_create_read_struct LIBPNG_IS_GOOD)
          endif()
@@ -674,7 +676,7 @@ if (NOT TARGET dlib)
             # Intel MKL, hasn't already decided what to use.  This is because
             # it makes the MKL bug out if you link to another openmp lib other
             # than Intel's when you use the MKL.
-            if (NOT openmp_libraries AND NOT MSVC AND NOT XCODE)
+            if (NOT openmp_libraries AND NOT MSVC AND NOT XCODE AND NOT APPLE)
                find_package(OpenMP)
                if (OPENMP_FOUND)
                   set(openmp_libraries ${OpenMP_CXX_FLAGS}) 

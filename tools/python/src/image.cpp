@@ -38,7 +38,7 @@ numpy_image<unsigned char> py_threshold_image2(
 )
 {
     numpy_image<unsigned char> out_img;
-    threshold_image(in_img, out_img);
+    threshold_image(in_img, out_img, thresh);
     return out_img;
 }
 
@@ -580,23 +580,23 @@ std::vector<point> py_find_peaks2 (
 // ----------------------------------------------------------------------------------------
 
 template <typename T>
-numpy_image<T> py_hysteresis_threshold (
+numpy_image<unsigned char> py_hysteresis_threshold (
     const numpy_image<T>& img,
     T lower_thresh,
     T upper_thresh
 )
 {
-    numpy_image<T> out;
+    numpy_image<unsigned char> out;
     hysteresis_threshold(img, out, lower_thresh, upper_thresh);
     return out;
 }
 
 template <typename T>
-numpy_image<T> py_hysteresis_threshold2 (
+numpy_image<unsigned char> py_hysteresis_threshold2 (
     const numpy_image<T>& img
 )
 {
-    numpy_image<T> out;
+    numpy_image<unsigned char> out;
     hysteresis_threshold(img, out);
     return out;
 }
